@@ -25,7 +25,7 @@ td {
 
 }
 
-.operator {
+.Coperator, .multoperator, .divoperator, .minoperator, .addoperator, .equaloperator {
     background-color: orange;
 }
 
