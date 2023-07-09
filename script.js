@@ -14,23 +14,18 @@ function divide(a, b) {
     return a / b;
 }
 
-let firstnum;
-let operator;
-let secondnum; //check this later, might cause problems
-let displaynum = 0;
-
 function operate(num1, operator, num2) {
     if (operator === '+') {
-        add(num1, num2);
+        return +num1 + +num2;
     }
     else if (operator === '-') {
-        subtract(num1, num2);
+        return num1 - num2;;
     }
     else if (operator === '*') {
-        multiply(num1, num2);
+        return num1 * num2;;
     }
     else if (operator === '/') {
-        divide(num1, num2);
+        return num1 / num2;;
     }
 }
 
@@ -47,16 +42,101 @@ for(let i=0; i< number.length; i++) {
     number[i].addEventListener('click', display);
 }
 
-Coperator.addEventListener('click', display);
+Coperator.addEventListener('click', () => {
+    results.textContent = '';
+});
+divoperator.addEventListener('click', display);
+multoperator.addEventListener('click', display);
+minoperator.addEventListener('click', display);
+addoperator.addEventListener('click', display);
+equaloperator.addEventListener('click', display);
+
+let firstnum; 
+let operator;
+let secondnum = ''; 
+let displaynum = 0;
+let resultnum;
+let gotfirst = false;
+let tempop = '';
+let gotfirst2 = false
 
 function display(e) {
-    if(results.textContent === '0' && number || results.textContent === '+') {
+
+    if(e.target.innerText === '=' && firstnum !== '' && secondnum !== '' && tempop === '+') {
+        results.textContent = operate(secondnum, '+', firstnum);
+        gotfirst = false;
+        gotfirst2 = false;
+        firstnum = '';
+        secondnum = '';
+    }
+    else if(e.target.innerText === '=' && firstnum !== '' && secondnum !== '' && tempop === '-') {
+        results.textContent = operate(secondnum, '-', firstnum);
+        gotfirst = false;
+        gotfirst2 = false;
+        firstnum = '';
+        secondnum = '';
+    }
+    else if(e.target.innerText === '=' && firstnum !== '' && secondnum !== '' && tempop === '*') {
+        results.textContent = operate(secondnum, '*', firstnum);
+        gotfirst = false;
+        gotfirst2 = false;
+        firstnum = '';
+        secondnum = '';
+    }
+    else if(e.target.innerText === '=' && firstnum !== '' && secondnum !== '' && tempop === '/') {
+        results.textContent = operate(secondnum, '/', firstnum);
+        gotfirst = false;
+        gotfirst2 = false;
+        firstnum = '';
+        secondnum = '';
+    }
+
+    else if(gotfirst2 === false && number && secondnum === '') {
         results.textContent = e.target.innerText;
+        firstnum = results.textContent; 
+        gotfirst2 = true;
     }
-    else{
+    else if(firstnum && e.target.innerText === '+'){
+        secondnum = firstnum;
+        tempop = '+'; 
+        results.textContent = secondnum;
+
+    }
+    else if(firstnum && e.target.innerText === '-'){
+        secondnum = firstnum;
+        tempop = '-'; 
+        results.textContent = secondnum;
+    }
+    else if(firstnum && e.target.innerText === '/'){
+        secondnum = firstnum;
+        tempop = '/'; 
+        results.textContent = secondnum;
+    }
+    else if(firstnum && e.target.innerText === '*'){
+        secondnum = firstnum;
+        tempop = '*'; 
+        results.textContent = secondnum;
+    }
+    else if (secondnum === '' && gotfirst2 === true) {
         results.textContent += e.target.innerText;
+        firstnum = results.textContent;
     }
-    if(e.target.innerText === 'C') {
-        results.textContent = '0';
+    else if(secondnum !== '' && gotfirst === true) {
+        results.textContent += e.target.innerText;
+        firstnum = results.textContent;
     }
+    else if(secondnum !== '') {
+        results.textContent = e.target.innerText;
+        firstnum = results.textContent; 
+        gotfirst = true;
+    }
+
+    
+
+
+
+
 }
+
+
+
